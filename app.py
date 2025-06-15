@@ -10,7 +10,7 @@ app = Flask(__name__)
 CORS(app)
 
 # 환경변수에서 Firebase 서비스 계정 키 불러오기
-account_key_str = os.getenv("account_key")
+account_key_str = os.getenv("AccountKey")
 
 if not account_key_str:
     raise RuntimeError("환경변수 'account_key'가 설정되지 않았습니다.")
