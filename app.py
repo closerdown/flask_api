@@ -73,7 +73,7 @@ def get_congestion(bus_no):
         doc = next(docs, None)
         if doc:
             data = doc.to_dict()
-            data["timestamp"] = data["timestamp"].to_datetime().isoformat()
+            data["timestamp"] = data["timestamp"].isoformat()  # 수정된 부분
             return jsonify(data)
         else:
             return jsonify({"error": "No data found"}), 404
@@ -94,7 +94,7 @@ def get_congestion_history(bus_no):
         for d in docs:
             d_dict = d.to_dict()
             history.append({
-                "timestamp": d_dict["timestamp"].to_datetime().isoformat(),
+                "timestamp": d_dict["timestamp"].isoformat(),  # 수정된 부분
                 "total_congestion": d_dict.get("total_congestion", 0)
             })
         return jsonify(history)
