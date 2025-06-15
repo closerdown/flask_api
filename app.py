@@ -17,6 +17,10 @@ if not account_key_str:
 
 firebase_info = json.loads(account_key_str)
 
+# private_key 안의 '\\n'을 실제 개행문자 '\n'으로 변환
+if 'private_key' in firebase_info:
+    firebase_info['private_key'] = firebase_info['private_key'].replace('\\n', '\n')
+
 # Firebase 초기화
 if not firebase_admin._apps:
     cred = credentials.Certificate(firebase_info)
