@@ -1,6 +1,5 @@
-streamlit
+flask
+flask-cors
+pymongo
 requests
-matplotlib
-folium
-streamlit-folium
 werkzeug<3.0
