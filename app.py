@@ -7,27 +7,47 @@ from datetime import datetime, timedelta
 app = Flask(__name__)
 CORS(app)  # CORS 허용
 
-# Firebase 초기화
+# 직접 JSON 딕셔너리로 Firebase 서비스 계정 정보 넣기
 firebase_info = {
-    # 실제 st.secrets["firebase"] 내용을 여기에 넣거나
-    # 환경변수로 처리하고 아래처럼 초기화하세요
-    # 예시:
-    # "type": "...",
-    # "project_id": "...",
-    # "private_key_id": "...",
-    # "private_key": "...",
-    # "client_email": "...",
-    # "client_id": "...",
-    # ...
+    "type": "service_account",
+    "project_id": "capstoneappstore",
+    "private_key_id": "297406c5770c72af04366e721317c64762a329a7",
+    "private_key": """-----BEGIN PRIVATE KEY-----
+MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCvl9Tdr43JLARt
+gNGmmbDM7cJ1Yu5dHkIBr+49a3xvHkr6Hgn9v4EWe9qNHnmQQ06oL0GMLbDlmNVW
+maPon0uxlRKs0fO7WOy/6NPdi31UBcmaYx4ARCGf68JV1iz8waXnwy8E0vMBzZ5e
+GJgPZ4ZyLpesaRiGz+TxUJib7sY2YfgZG2hAZaNAuwbEgGj5N8OOxCkVN1u0cahT
+SETTuCFOLpx+HpwSGuCvBaM1SjhT17ltOVSH98QTPeCtnc8oU+UgKbbbEFnRxyje
+Nea3a7AB90CxIPKogSF5aiB6YzzNAkrvKfpjo14W2dGSPtW0ZYBDWZD1FAgDPMhx
+ihJzV4+DAgMBAAECggEAKK600ufpocJhBD3kVQUmwVQUyb2yHED2ag2o1PIiUlxi
+YrCy/+dusRbg+/EjmRj/EFhih2fOpGNUikvufebqUqqHOSMrpSxlLdFzxNCcqOru
+Wqa8PLOMVtD4pYqJwcXb+mZubl+xjalmF8b69Ba4P5wr5/YxiIqCMKbLtNUNd2u4
+V8CYaoOPIY+9wu/Mi1gPD49n5CEgpqpXKNyofYlO1VT39YUhgtyWQGJUW3fWEvtM
+WSZG0HLIxZOro+Ub7zg3xYz2b4YTuqg/uuNZ6ejiUDja66IIemfoQ1+XcljuYgfZ
+Y2jaCgS3xZF/7PqtqeMwvO+uZGskifggdWxnOjpBAQKBgQDwlS42ALyZRYqIYpyt
+YhOqxqFua2VCC2k07z5haTwIkCeeTOU3lfVMvXpeP+6FiBRD3yVyxBev9rEI9LV5
+GQGOGi2sl2i2MMYE6zAi8zX5JM3HSdMWivpCP+6Lrl9yL9YGF8nkavT8ijss19Tb
+hMCC3vnBYKy19ZMlctRUgcPUSQKBgQC62HrQ8tjkqxcl21JXl5pYUO27JK2aNArq
+TMZtFxltMwm8dt7nuN/TqEuG0QFNuWWYR1teR5/9lKb9F09i72uUS8Wd4YWYSWap
+90lklpLYKQuc75VGusn/IrDPkkfCERBKlg5kbCiNE5ypnAW3v65Aj0I3XgWEaW+7
+lY6u/sUtawKBgGLyWCEpyGeZbFKPjDTbI4+XRgmt7eVt4AU/aH6T03cKIuE+av+j
+k1HOlCdzT9xnjT4k5rf+4mcipMk0K/b0S+lv5t0XIJ/eC3M2b4PQV6ByfJe8Sy74
+VdkthiS4wNSry/CRlB13x+6dw5y73/Ww8aRhpILeCeqEZ9J9Gcrv2+TRAoGBAKXB
+vtL3XesezR5Mf7QtTkPjJ8PKOih+2uAY1D+bKndxu8VyPzWbERYYS0iCyoFFZBe/
+1hLBv/GamroUn9zJQcsBnYL+uyHqnCVUt8uAuS0C3MaQ1QE2XFT3VZwPzZEgyi8h
+CAuW2DKvn1/ohjoI1nF3peqwgnyBfRoRB8+/PPWZAoGBAOPkqpiAhMZ/rXNx/Lns
+Mox6SlNHH+nLg1uFZkr267bbyCNBpqDeV42fZ8OsP2m8VjyLrEsahkWzawdTvgdr
+v3g6rp3hYkHMrHQpvfPsW9xtb3kdeclr+BR9cfnoubt3qlFYRhYtyHkp4ou722MU
+NNSv3fLt3zTRcvzDVdCfMNaB
+-----END PRIVATE KEY-----""",
+    "client_email": "firebase-adminsdk-fbsvc@capstoneappstore.iam.gserviceaccount.com",
+    "client_id": "113665010845116994866",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-fbsvc%40capstoneappstore.iam.gserviceaccount.com",
+    "universe_domain": "googleapis.com"
 }
-
-# 예를 들어 환경변수에서 불러오면 이렇게
-import os
-import json
-
-firebase_json_str = os.getenv("FIREBASE_CREDENTIAL_JSON")
-firebase_info = json.loads(firebase_json_str)
-firebase_info["private_key"] = firebase_info["private_key"].replace("\\n", "\n")
 
 if not firebase_admin._apps:
     cred = credentials.Certificate(firebase_info)
@@ -84,7 +104,6 @@ def get_congestion(bus_no):
         doc = next(docs, None)
         if doc:
             data = doc.to_dict()
-            # Firestore timestamp 객체는 isoformat으로 변환
             data["timestamp"] = data["timestamp"].to_datetime().isoformat()
             return jsonify(data)
         else:
