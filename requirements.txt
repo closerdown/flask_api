@@ -4,3 +4,4 @@ pymongo
 requests
 werkzeug<3.0
 gunicorn
+firebase-admin
